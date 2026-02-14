@@ -206,9 +206,9 @@ services:
     restart: unless-stopped
 YAML
 
-  # nginx conf
-  backup_file_if_exists "${PROJECT_DIR}/nginx/default.conf"
-  cat > "${PROJECT_DIR}/nginx/default.conf" <<'NGINX'
+# nginx conf
+backup_file_if_exists "${PROJECT_DIR}/nginx/default.conf"
+cat > "${PROJECT_DIR}/nginx/default.conf" <<'NGINX'
 log_format main_ext '$remote_addr - $remote_user [$time_local] '
                     '"$request" $status $body_bytes_sent '
                     'host="$host" ref="$http_referer" ua="$http_user_agent" '
@@ -222,8 +222,8 @@ server {
     listen [::]:80;
     server_name _;
 
-    access_log /dev/stdout main_ext;
-    error_log  /dev/stderr warn;
+    access_log /var/log/nginx/access.log main_ext;
+    error_log  /var/log/nginx/error.log warn;
 
     return 301 https://$host$request_uri;
 }
@@ -241,8 +241,8 @@ server {
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
 
-    access_log /dev/stdout main_ext;
-    error_log  /dev/stderr warn;
+    access_log /var/log/nginx/access.log main_ext;
+    error_log  /var/log/nginx/error.log warn;
 
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-Frame-Options "DENY" always;
@@ -265,7 +265,7 @@ server {
 
     location = / {
         default_type application/json;
-        return 200 '{"service":"zirna-cietoksnis","reverse_proxy":"enabled","version":"v5"}';
+        return 200 '{"service":"zirna-cietoksnis","reverse_proxy":"enabled","version":"v6"}';
     }
 }
 NGINX
