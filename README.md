@@ -10,5 +10,8 @@ Automātisks deploy skripts Debian 13 VM:
 
 ## Palaišana
 ```bash
-chmod +x deploy.sh
-sudo ./deploy.sh
+sudo apt update && sudo apt install -y git
+git clone https://github.com/Raito00/zirna_cietoksnis.git
+cd zirna_cietoksnis
+chmod +x install.sh
+sudo ./install.sh
