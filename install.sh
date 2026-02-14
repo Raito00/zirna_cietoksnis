@@ -209,12 +209,10 @@ YAML
 # nginx conf
 backup_file_if_exists "${PROJECT_DIR}/nginx/default.conf"
 cat > "${PROJECT_DIR}/nginx/default.conf" <<'NGINX'
-log_format main_ext '$remote_addr - $remote_user [$time_local] '
-                    '"$request" $status $body_bytes_sent '
-                    'host="$host" ref="$http_referer" ua="$http_user_agent" '
-                    'xff="$http_x_forwarded_for" '
-                    'rt=$request_time '
-                    'ua_addr="$upstream_addr" ua_status="$upstream_status" '
+log_format main_ext '$remote_addr realip="$http_x_real_ip" xff="$http_x_forwarded_for" '
+                    '[$time_local] "$request" $status $body_bytes_sent '
+                    'host="$host" ua="$http_user_agent" '
+                    'rt=$request_time ua_addr="$upstream_addr" ua_status="$upstream_status" '
                     'uct=$upstream_connect_time uht=$upstream_header_time urt=$upstream_response_time';
 
 server {
