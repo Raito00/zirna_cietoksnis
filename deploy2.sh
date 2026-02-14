@@ -42,27 +42,26 @@ apt install -y ca-certificates curl gnupg ufw openssl
 # ---------------------------------------------------------
 # 2) User setup
 # ---------------------------------------------------------
+USER_CREATED="false"
+
 if id "${APP_USER}" >/dev/null 2>&1; then
   log "Lietotājs '${APP_USER}' jau eksistē."
 else
   log "Veidoju lietotāju '${APP_USER}'..."
   adduser --disabled-password --gecos "" "${APP_USER}"
+  USER_CREATED="true"
 fi
 
 log "Pievienoju '${APP_USER}' sudo grupai..."
 usermod -aG sudo "${APP_USER}"
 
-if [[ -f /root/.ssh/authorized_keys ]]; then
-  log "Kopēju root authorized_keys uz ${APP_USER} (ja vēl nav)..."
-  install -d -m 700 -o "${APP_USER}" -g "${APP_USER}" "/home/${APP_USER}/.ssh"
-  if [[ ! -f "/home/${APP_USER}/.ssh/authorized_keys" ]]; then
-    cp /root/.ssh/authorized_keys "/home/${APP_USER}/.ssh/authorized_keys"
-  fi
-  chown "${APP_USER}:${APP_USER}" "/home/${APP_USER}/.ssh/authorized_keys"
-  chmod 600 "/home/${APP_USER}/.ssh/authorized_keys"
-else
-  warn "Nav /root/.ssh/authorized_keys. SSH key uz ${APP_USER} ieliec manuāli."
+# Ja lietotājs tikko izveidots, prasa iestatīt paroli
+if [[ "${USER_CREATED}" == "true" ]]; then
+  echo
+  log "Iestati paroli lietotājam '${APP_USER}' (nepieciešama sudo komandām):"
+  passwd "${APP_USER}"
 fi
+
 
 # ---------------------------------------------------------
 # 3) Docker install
