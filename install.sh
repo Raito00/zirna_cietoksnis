@@ -249,6 +249,7 @@ server {
 
     location = /health {
         proxy_pass http://backend:8080/;
+        add_header Content-Type application/json always;
         proxy_http_version 1.1;
 
         proxy_set_header Host $host;
