@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # =========================================================
-# Zirna Cietoksnis v4 - one-shot deploy for Debian 13
+# Zirna Cietoksnis v4 - priekš - Debian 13
 # =========================================================
 
 APP_USER="${APP_USER:-zirnis}"
@@ -10,8 +10,8 @@ PROJECT_NAME="${PROJECT_NAME:-zirna-cietoksnis}"
 PROJECT_DIR="/home/${APP_USER}/${PROJECT_NAME}"
 
 CERT_C="${CERT_C:-LV}"
-CERT_ST="${CERT_ST:-Riga}"
-CERT_L="${CERT_L:-Riga}"
+CERT_ST="${CERT_ST:-Smiltene}"
+CERT_L="${CERT_L:-Smiltene}"
 CERT_O="${CERT_O:-ZirnaCietoksnis}"
 CERT_OU="${CERT_OU:-IT}"
 CERT_CN="${CERT_CN:-localhost}"
@@ -33,14 +33,14 @@ fi
 export DEBIAN_FRONTEND=noninteractive
 
 # ---------------------------------------------------------
-# 1) Base packages
+# 1) Apdeits pirms lielā darba
 # ---------------------------------------------------------
 log "Atjauninu pakotņu sarakstu un uzlieku bāzes rīkus..."
 apt update -y
 apt install -y ca-certificates curl gnupg ufw openssl
 
 # ---------------------------------------------------------
-# 2) User setup
+# 2) Izveidot lietotāju
 # ---------------------------------------------------------
 USER_CREATED="false"
 
@@ -106,7 +106,7 @@ ufw allow 443/tcp
 ufw --force enable
 
 # ---------------------------------------------------------
-# 5) Project layout
+# 5) Projekta izkārtojums
 # ---------------------------------------------------------
 log "Veidoju projekta mapes: ${PROJECT_DIR}"
 install -d -o "${APP_USER}" -g "${APP_USER}" "${PROJECT_DIR}/nginx"
