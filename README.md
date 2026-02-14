@@ -1,4 +1,4 @@
-# Zirna Cietoksnis 🫛🏰
+# Zirņa Cietoksnis 🫛🏰
 
 Automātisks deploy skripts Debian 13 VM:
 - izveido lietotāju `zirnis`
