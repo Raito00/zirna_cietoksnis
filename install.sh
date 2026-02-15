@@ -247,9 +247,17 @@ server {
     add_header Referrer-Policy "no-referrer" always;
     add_header X-XSS-Protection "1; mode=block" always;
 
+    # Lai upstream kļūdas /health endpointam atdotu glītu JSON
+    proxy_intercept_errors on;
+    error_page 502 503 504 = @health_error_json;
+
+    location @health_error_json {
+        default_type application/json;
+        return 503 '{"status":"critical","error":"backend_unavailable"}';
+    }
+
     location = /health {
         proxy_pass http://backend:8080/;
-        add_header Content-Type application/json always;
         proxy_http_version 1.1;
 
         proxy_set_header Host $host;
@@ -257,17 +265,19 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
-        proxy_connect_timeout 3s;
-        proxy_read_timeout 5s;
-        proxy_send_timeout 5s;
+        proxy_connect_timeout 2s;
+        proxy_read_timeout 3s;
+        proxy_send_timeout 3s;
+        proxy_next_upstream off;
     }
 
     location = / {
         default_type application/json;
-        return 200 '{"service":"zirna-cietoksnis","reverse_proxy":"enabled","version":"v6"}';
+        return 200 '{"service":"zirna-cietoksnis","reverse_proxy":"enabled","version":"v7"}';
     }
 }
 NGINX
+
 
   # health check
   cat > "${PROJECT_DIR}/scripts/health_check.sh" <<'HC'
