@@ -265,6 +265,9 @@ server {
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 
+        proxy_hide_header Content-Type;
+        add_header Content-Type "application/json" always;
+
         proxy_connect_timeout 2s;
         proxy_read_timeout 3s;
         proxy_send_timeout 3s;
