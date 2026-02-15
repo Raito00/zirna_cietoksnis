@@ -43,7 +43,7 @@ Backend serviss klausās uz iekšējā porta `8080` un atgriež JSON:
 ```bash
 cd ~/zirna-cietoksnis
 docker compose ps
-curl -k https://89.167.48.65/health
+curl -k https://89.167.22.56/health
 ```
 
 ---
@@ -57,16 +57,16 @@ Nginx:
 
 ### Pārbaude
 ```bash
-curl -I http://89.167.48.65/health
-curl -k https://89.167.48.65/health
-curl -kL http://89.167.48.65/health
+curl -I http://89.167.22.56/health
+curl -k https://89.167.22.56/health
+curl -kL http://89.167.22.56/health
 ```
 
 TLS testi:
 ```bash
-openssl s_client -connect 89.167.48.65:443 -tls1 </dev/null
-openssl s_client -connect 89.167.48.65:443 -tls1_1 </dev/null
-openssl s_client -connect 89.167.48.65:443 -tls1_2 </dev/null
+openssl s_client -connect 89.167.22.56:443 -tls1 </dev/null
+openssl s_client -connect 89.167.22.56:443 -tls1_1 </dev/null
+openssl s_client -connect 89.167.22.56:443 -tls1_2 </dev/null
 ```
 
 ---
@@ -91,7 +91,7 @@ docker inspect zirna_backend --format '{{json .HostConfig.PortBindings}}'
 
 ### Pārbaude
 ```bash
-curl -k https://89.167.48.65/health >/dev/null
+curl -k https://89.167.22.56/health >/dev/null
 docker logs zirna_nginx --since 2m
 docker logs zirna_backend --since 2m
 docker inspect -f '{{.LogPath}}' zirna_nginx
@@ -110,17 +110,17 @@ Izveidots health check skripts:
 
 ### Pārbaude
 ```bash
-~/zirna-cietoksnis/scripts/health_check.sh "https://89.167.48.65/health"
+~/zirna-cietoksnis/scripts/health_check.sh "https://89.167.22.56/health"
 echo $?
 ```
 
 Kļūmes simulācija:
 ```bash
 docker stop zirna_backend
-~/zirna-cietoksnis/scripts/health_check.sh "https://89.167.48.65/health"
+~/zirna-cietoksnis/scripts/health_check.sh "https://89.167.22.56/health"
 echo $?
 docker start zirna_backend
-~/zirna-cietoksnis/scripts/health_check.sh "https://89.167.48.65/health"
+~/zirna-cietoksnis/scripts/health_check.sh "https://89.167.22.56/health"
 echo $?
 ```
 
@@ -138,9 +138,9 @@ docker compose ps
 
 ### B) Testēšana
 ```bash
-curl -k https://89.167.48.65/health
-curl -I http://89.167.48.65/health
-curl -kL http://89.167.48.65/health
+curl -k https://89.167.22.56/health
+curl -I http://89.167.22.56/health
+curl -kL http://89.167.22.56/health
 ```
 
 ### C) Restart
@@ -151,6 +151,6 @@ docker compose ps
 
 ### D) Health check
 ```bash
-~/zirna-cietoksnis/scripts/health_check.sh "https://89.167.48.65/health"
+~/zirna-cietoksnis/scripts/health_check.sh "https://89.167.22.56/health"
 echo $?
 ```
