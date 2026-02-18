@@ -261,7 +261,7 @@ server {
     }
 
     location = /health {
-        proxy_pass http://backend:8080/;
+        proxy_pass http://backend:5678/;
         proxy_http_version 1.1;
 
         proxy_set_header Host $host;
