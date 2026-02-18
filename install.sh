@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # =========================================================
-# Zirna Cietoksnis v5 - Debian 13 one-shot deploy
+# Zirna Cietoksnis v8 - Debian 13 one-shot deploy
 # - Izveido lietotāju (zirnis), jautā izveidot paroli
 # - kopē root authorized_keys -> zirnis
 # - installs Docker + Compose
@@ -280,7 +280,7 @@ server {
 
     location = / {
         default_type application/json;
-        return 200 '{"service":"zirna-cietoksnis","reverse_proxy":"enabled","version":"v7"}';
+        return 200 '{"service":"zirna-cietoksnis","reverse_proxy":"enabled","version":"v8"}';
     }
 }
 NGINX
