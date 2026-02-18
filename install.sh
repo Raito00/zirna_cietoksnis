@@ -244,7 +244,7 @@ server {
     ssl_session_timeout 10m;
 
     access_log /var/log/nginx/access.log main_ext;
-    error_log  /var/log/nginx/error.log warn;
+    error_log  /var/log/nginx/error.log info;
 
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-Frame-Options "DENY" always;
