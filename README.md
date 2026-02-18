@@ -3,7 +3,7 @@
 ## Kopsavilkums
 Šajā risinājumā:
 - Linux vide: **Debian 13 VM**
-- Web serviss: uz **iekšējā porta 8080**
+- Web serviss: uz **iekšējā porta 5678**
 - Reverse proxy: **Nginx** uz 80/443
 - HTTPS ar **self-signed** sertifikātu
 - HTTP tiek pāradresēts uz HTTPS
@@ -35,7 +35,7 @@ docker compose version
 ---
 
 ## 2) Vienkāršs web serviss
-Backend serviss klausās uz iekšējā porta `8080` un atgriež JSON:
+Backend serviss klausās uz iekšējā porta `5678` un atgriež JSON:
 
 `GET /health` → `{"status":"ok"}`
 
@@ -74,7 +74,7 @@ openssl s_client -connect 89.167.22.56:443 -tls1_2 </dev/null
 ## 4) Drošība
 - UFW firewall konfigurēts
 - Atļauti tikai porti: `22`, `80`, `443`
-- Backend 8080 nav publiski atvērts
+- Backend 5678 nav publiski atvērts
 
 ### Pārbaude
 ```bash
