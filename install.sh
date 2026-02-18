@@ -163,6 +163,7 @@ write_project_files() {
   install -d -o "${APP_USER}" -g "${APP_USER}" "${PROJECT_DIR}/nginx"
   install -d -o "${APP_USER}" -g "${APP_USER}" "${PROJECT_DIR}/certs"
   install -d -o "${APP_USER}" -g "${APP_USER}" "${PROJECT_DIR}/scripts"
+  install -d -o "${APP_USER}" -g "${APP_USER}" "${PROJECT_DIR}/logs/nginx"
 
   # cert
   local crt="${PROJECT_DIR}/certs/selfsigned.crt"
@@ -187,9 +188,7 @@ services:
   backend:
     image: hashicorp/http-echo:1.0.0
     container_name: zirna_backend
-    command: ["-listen=:8080", "-text={\"status\":\"ok\"}"]
-    expose:
-      - "8080"
+    command: ["-text={\"status\":\"ok\"}"]
     restart: unless-stopped
 
   nginx:
@@ -203,6 +202,11 @@ services:
     volumes:
       - ./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./certs:/etc/nginx/certs:ro
+      - ./logs/nginx:/var/log/nginx
+    command: >
+      /bin/sh -c "
+      mkdir -p /var/log/nginx &&
+      exec nginx -g 'daemon off;'"
     restart: unless-stopped
 YAML
 
