@@ -31,7 +31,7 @@ err()  { echo -e "\n\033[1;31m[ERR ]\033[0m $*"; }
 
 require_root() {
   if [[ "${EUID}" -ne 0 ]]; then
-    err "Palaid ar root tiesībām: sudo bash deploy2.sh"
+    err "Palaid ar root tiesībām: sudo bash install.sh"
     exit 1
   fi
 }
