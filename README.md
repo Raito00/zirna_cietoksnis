@@ -96,6 +96,7 @@ docker logs zirna_nginx --since 2m
 docker logs zirna_backend --since 2m
 docker inspect -f '{{.LogPath}}' zirna_nginx
 docker inspect -f '{{.LogPath}}' zirna_backend
+tail -n 50 ~/zirna-cietoksnis/logs/nginx/access.log -f
 ```
 
 ---
@@ -126,7 +127,7 @@ echo $?
 
 ---
 
-## 7) Video zvana demonstrācija (checklist)
+## 7) Video zvana demonstrācija (checklist :))
 
 ### A) Vide
 ```bash
